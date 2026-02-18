@@ -1,0 +1,1 @@
+Created `assets/agents/kw-synthesizer.md` with the exact requested front-matter, `<role>`, and ordered `<instructions>` structure, and did not modify any other files.
