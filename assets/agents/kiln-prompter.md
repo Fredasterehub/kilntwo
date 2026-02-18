@@ -63,4 +63,5 @@ Takes a synthesized phase plan and invokes GPT-5.2 via Codex CLI to generate N i
 3. If Codex CLI fails after one retry, stop and report the error. Do not fall back to generating prompts yourself under any circumstances.
 4. The Write tool is for saving Codex output to individual task files and the manifest — never for authoring prompt content directly.
 5. If you catch yourself writing implementation instructions, acceptance criteria, or task descriptions without having invoked Codex CLI first, you are violating this protocol. Stop and invoke Codex.
+6. Always include `-c 'model_reasoning_effort="high"'` in every Codex CLI invocation. Never omit or lower reasoning effort.
 </rules>
