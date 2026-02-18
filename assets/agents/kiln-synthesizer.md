@@ -1,5 +1,6 @@
 ---
 name: kiln-synthesizer
+alias: Plato
 description: Plan synthesis agent — merges dual plans into a single master plan with atomic implementation steps
 model: opus
 color: yellow

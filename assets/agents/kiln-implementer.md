@@ -1,5 +1,6 @@
 ---
 name: kiln-implementer
+alias: Codex
 description: GPT-5.3-codex implementation agent — executes task prompts to write actual code
 model: sonnet
 color: green

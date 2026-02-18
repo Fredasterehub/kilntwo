@@ -57,18 +57,18 @@ Save current pipeline state to memory files and prepare for a context reset. Run
 
 ## Agent Roster
 
-| Agent | Model | Role |
-|---|---|---|
-| kiln-phase-executor | claude-opus-4-6 | Phase execution coordinator — orchestrates the full plan-prompt-implement-review lifecycle for a single phase |
-| kiln-planner-claude | claude-opus-4-6 | Claude-side implementation planner — creates detailed plans from project context and memory |
-| kiln-synthesizer | claude-opus-4-6 | Plan synthesis agent — merges dual plans into a single master plan with atomic implementation steps |
-| kiln-reviewer | claude-opus-4-6 | Code review agent — reviews phase changes for correctness, completeness, and quality |
-| kiln-validator | claude-opus-4-6 | E2E validation agent — detects project type, runs full test suite, generates validation report |
-| kiln-debater | claude-opus-4-5 | Plan debate and resolution agent — identifies disagreements between Claude and Codex plans and resolves them |
-| kiln-planner-codex | claude-sonnet-4-6 | GPT-5.2 planning agent via Codex CLI — produces alternative implementation plans |
-| kiln-prompter | claude-sonnet-4-6 | GPT-5.2 prompt generation agent — converts phase plans into atomic task prompts for Codex implementation |
-| kiln-implementer | claude-sonnet-4-6 | GPT-5.3-codex implementation agent — executes task prompts to write actual code |
-| kiln-researcher | claude-haiku | Fast documentation and codebase research agent |
+| Alias | Agent | Model | Role |
+|---|---|---|---|
+| Maestro | kiln-phase-executor | claude-opus-4-6 | Phase execution coordinator |
+| Confucius | kiln-planner-claude | claude-opus-4-6 | Claude-side implementation planner |
+| Sun Tzu | kiln-planner-codex | claude-sonnet-4-6 | GPT-5.2 planning via Codex CLI |
+| Socrates | kiln-debater | claude-opus-4-5 | Plan debate and resolution |
+| Plato | kiln-synthesizer | claude-opus-4-6 | Plan synthesis and merge |
+| Scheherazade | kiln-prompter | claude-sonnet-4-6 | Task prompt generation via GPT-5.2 |
+| Codex | kiln-implementer | claude-sonnet-4-6 | Code implementation via GPT-5.3-codex |
+| Sphinx | kiln-reviewer | claude-opus-4-6 | Code review and QA gate |
+| Argus | kiln-validator | claude-opus-4-6 | E2E validation and test runner |
+| Sherlock | kiln-researcher | claude-haiku | Fast documentation and codebase research |
 
 ## CLI Commands
 

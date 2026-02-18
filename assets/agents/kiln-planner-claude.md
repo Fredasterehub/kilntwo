@@ -1,5 +1,6 @@
 ---
 name: kiln-planner-claude
+alias: Confucius
 model: opus
 color: blue
 description: >-

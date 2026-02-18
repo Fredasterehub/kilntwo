@@ -1,5 +1,6 @@
 ---
 name: kiln-phase-executor
+alias: Maestro
 model: opus
 color: white
 description: >-

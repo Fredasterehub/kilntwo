@@ -1,0 +1,46 @@
+{
+  "kiln": {
+    "alias": "Kiln",
+    "role": "orchestrator"
+  },
+  "kiln-planner-claude": {
+    "alias": "Confucius",
+    "role": "planner (Claude)"
+  },
+  "kiln-planner-codex": {
+    "alias": "Sun Tzu",
+    "role": "planner (Codex)"
+  },
+  "kiln-debater": {
+    "alias": "Socrates",
+    "role": "debater"
+  },
+  "kiln-synthesizer": {
+    "alias": "Plato",
+    "role": "synthesizer"
+  },
+  "kiln-prompter": {
+    "alias": "Scheherazade",
+    "role": "prompter"
+  },
+  "kiln-implementer": {
+    "alias": "Codex",
+    "role": "implementer"
+  },
+  "kiln-reviewer": {
+    "alias": "Sphinx",
+    "role": "reviewer"
+  },
+  "kiln-phase-executor": {
+    "alias": "Maestro",
+    "role": "phase executor"
+  },
+  "kiln-validator": {
+    "alias": "Argus",
+    "role": "validator"
+  },
+  "kiln-researcher": {
+    "alias": "Sherlock",
+    "role": "researcher"
+  }
+}
