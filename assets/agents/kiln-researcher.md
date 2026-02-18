@@ -4,7 +4,7 @@ alias: Sherlock
 description: Fast documentation and codebase research agent
 tools: Read, Grep, Glob, WebSearch, WebFetch, mcp__context7__resolve-library-id, mcp__context7__query-docs
 model: haiku
-color: cyan
+color: auto
 ---
 
 <role>

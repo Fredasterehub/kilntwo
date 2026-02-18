@@ -107,6 +107,19 @@ describe('install E2E', { concurrency: false }, () => {
     }
   });
 
+  it('copies names.json to kilntwoDir', () => {
+    install({ home: tmpHome, projectPath: tmpProject });
+
+    const namesPath = path.join(paths.kilntwoDir, 'names.json');
+    assertNonEmptyFile(namesPath);
+    const parsed = JSON.parse(fs.readFileSync(namesPath, 'utf8'));
+    assert.ok(parsed['kiln-planner-claude'], 'names.json should contain kiln-planner-claude');
+    assert.ok(
+      Array.isArray(parsed['kiln-planner-claude'].quotes),
+      'kiln-planner-claude should have quotes array'
+    );
+  });
+
   it('writes CLAUDE.md with protocol block to projectPath', () => {
     install({ home: tmpHome, projectPath: tmpProject });
 
@@ -133,12 +146,13 @@ describe('install E2E', { concurrency: false }, () => {
     const expectedCount =
       listMarkdownFiles(ASSETS_AGENTS_DIR).length +
       listMarkdownFiles(ASSETS_COMMANDS_DIR).length +
-      listMarkdownFiles(ASSETS_TEMPLATES_DIR).length;
+      listMarkdownFiles(ASSETS_TEMPLATES_DIR).length +
+      1; // names.json
 
     assert.strictEqual(
       result.installed.length,
       expectedCount,
-      `installed.length should equal total .md asset count (${expectedCount})`
+      `installed.length should equal total asset count (${expectedCount})`
     );
 
     for (const installedPath of result.installed) {

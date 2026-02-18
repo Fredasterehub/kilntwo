@@ -54,6 +54,8 @@ The Kiln pipeline uses these specialized agents. Each has a character alias used
 
 When logging agent activity, use the alias (e.g., `[Confucius]` not `[kiln-planner-claude]`). When spawning agents via the Task tool, always set `name` to the alias and `subagent_type` to the internal name. This ensures the Claude Code UI displays character names in the spawn box (e.g., `Confucius (Claude-side planner)` instead of `kiln-planner-claude`).
 
+**Quote cycling** — Read `assets/names.json` (installed to `~/.claude/kilntwo/names.json`) at session start. When spawning an agent via the Task tool, set the `description` parameter to one of their quotes from the `quotes` array. Cycle sequentially through the array across spawns of the same agent. Do not repeat a quote within the same session unless all quotes have been used. Match the narrative arc: use early quotes for first spawns, later quotes as the pipeline progresses. For fix/retry rounds, prefer adversity-themed quotes (e.g., Sphinx's "Return and try again, mortal" or Confucius's "When goals shift, adjust the steps").
+
 ## Codex CLI Reference
 
 These are the canonical invocation patterns for all Codex calls made by the orchestrator.

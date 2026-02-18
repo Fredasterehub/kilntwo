@@ -149,7 +149,7 @@ Execute the Kiln protocol autonomously from the current working directory using 
    First task:
    `name`: `"Confucius"` (the alias)
    `subagent_type`: `kiln-planner-claude`
-   `description`: `"Claude-side planner"`
+   `description`: (next quote from names.json quotes array for kiln-planner-claude)
    Prompt content for `kiln-planner-claude` must include:
    Full contents of `MEMORY_DIR/vision.md`.
    Full contents of `MEMORY_DIR/MEMORY.md`.
@@ -159,7 +159,7 @@ Execute the Kiln protocol autonomously from the current working directory using 
    Second task:
    `name`: `"Sun Tzu"` (the alias)
    `subagent_type`: `kiln-planner-codex`
-   `description`: `"GPT-side planner"`
+   `description`: (next quote from names.json quotes array for kiln-planner-codex)
    Prompt content for `kiln-planner-codex` must include:
    The same full vision and memory contents.
    Instruction text:
@@ -174,7 +174,7 @@ Execute the Kiln protocol autonomously from the current working directory using 
    If `DEBATE_MODE >= 2`, spawn `kiln-debater` using the Task tool.
    `name`: `"Socrates"` (the alias)
    `subagent_type`: `kiln-debater`
-   `description`: `"Plan debate"`
+   `description`: (next quote from names.json quotes array for kiln-debater)
    Prompt must include:
    Full `PLAN_CLAUDE`.
    Full `PLAN_CODEX`.
@@ -193,7 +193,7 @@ Execute the Kiln protocol autonomously from the current working directory using 
     Spawn `kiln-synthesizer` with the Task tool.
     `name`: `"Plato"` (the alias)
     `subagent_type`: `kiln-synthesizer`
-    `description`: `"Plan synthesis"`
+    `description`: (next quote from names.json quotes array for kiln-synthesizer)
     Prompt must include:
     Full `PLAN_CLAUDE`.
     Full `PLAN_CODEX`.
@@ -246,7 +246,7 @@ Execute the Kiln protocol autonomously from the current working directory using 
     Spawn `kiln-phase-executor` via the Task tool.
     `name`: `"Maestro"` (the alias)
     `subagent_type`: `kiln-phase-executor`
-    `description`: `"Phase <N> — <phase name>"`
+    `description`: (next quote from names.json quotes array for kiln-phase-executor)
     Task prompt must include:
     Full phase section from the master plan, including name, goal, tasks, and acceptance criteria.
     Full `MEMORY_DIR/MEMORY.md`.
@@ -272,7 +272,7 @@ Execute the Kiln protocol autonomously from the current working directory using 
     After all phases complete, spawn `kiln-validator` via the Task tool.
     `name`: `"Argus"` (the alias)
     `subagent_type`: `kiln-validator`
-    `description`: `"E2E validation"`
+    `description`: (next quote from names.json quotes array for kiln-validator)
     Prompt must include:
     Full `MEMORY_DIR/master-plan.md`.
     All `MEMORY_DIR/phase-*-results.md` files in full.

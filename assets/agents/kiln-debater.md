@@ -3,7 +3,7 @@ name: kiln-debater
 alias: Socrates
 description: Plan debate and resolution agent — identifies disagreements between Claude and Codex plans and resolves them
 model: claude-opus-4-5
-color: magenta
+color: purple
 tools:
   - Read
   - Write

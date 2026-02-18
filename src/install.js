@@ -72,6 +72,23 @@ function install({ home, force = false, projectPath } = {}) {
     }
   }
 
+  // Copy names.json to kilntwoDir
+  const namesSrc = path.join(ASSETS_DIR, 'names.json');
+  const namesDest = path.join(kilntwoDir, 'names.json');
+  if (force || !fs.existsSync(namesDest)) {
+    fs.copyFileSync(namesSrc, namesDest);
+    installed.push(namesDest);
+  } else {
+    const destChecksum = computeChecksum(namesDest);
+    const srcChecksum = computeChecksum(namesSrc);
+    if (destChecksum === srcChecksum) {
+      installed.push(namesDest);
+    } else {
+      console.error(`[kiln] skipping ${namesDest} (user-edited; use --force to overwrite)`);
+      skipped.push(namesDest);
+    }
+  }
+
   const resolvedProject = projectPath || process.cwd();
   const claudeMdPath = path.join(resolvedProject, 'CLAUDE.md');
   const protocolSrc = path.join(ASSETS_DIR, 'protocol.md');
