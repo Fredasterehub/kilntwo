@@ -35,6 +35,26 @@ This protocol is active when Kiln is installed in the project. The Claude Code o
 
 9. **Generous timeouts** — All Codex CLI invocations must use a minimum timeout of 600 seconds. Tasks that involve large codebases, complex reasoning, or file-heavy operations should use 900 seconds or more. Never invoke Codex with default or short timeouts during automated pipeline execution.
 
+## Agent Roster
+
+The Kiln pipeline uses these specialized agents. Each has a character alias used in logs and status output.
+
+| Alias | Internal Name | Role |
+|---|---|---|
+| **Kiln** | *(orchestrator)* | Top-level session coordinator — runs interactively in Claude Code |
+| **Confucius** | kiln-planner-claude | Claude-side implementation planner |
+| **Sun Tzu** | kiln-planner-codex | GPT-5.2 planning via Codex CLI |
+| **Socrates** | kiln-debater | Plan debate and resolution |
+| **Plato** | kiln-synthesizer | Plan synthesis and merge |
+| **Scheherazade** | kiln-prompter | Task prompt generation via GPT-5.2 |
+| **Codex** | kiln-implementer | Code implementation via GPT-5.3-codex |
+| **Sphinx** | kiln-reviewer | Code review and QA gate |
+| **Maestro** | kiln-phase-executor | Phase lifecycle coordinator |
+| **Argus** | kiln-validator | E2E validation and test runner |
+| **Sherlock** | kiln-researcher | Fast documentation and codebase research |
+
+When logging agent activity, use the alias (e.g., `[Confucius]` not `[kiln-planner-claude]`). The internal name is used only for spawning via the Task tool.
+
 ## Codex CLI Reference
 
 These are the canonical invocation patterns for all Codex calls made by the orchestrator.

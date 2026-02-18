@@ -146,20 +146,20 @@ Execute the Kiln protocol autonomously from the current working directory using 
 8. Spawn dual planners in parallel with the Task tool.
    Use the Task tool by name.
    Spawn both planner tasks in parallel.
-   First task name:
-   `kiln-planner-claude`
-   Task description:
-   `"Kiln Claude Planner"`
+   First task:
+   `name`: `"Confucius"` (the alias)
+   `subagent_type`: `kiln-planner-claude`
+   `description`: `"Claude-side planner"`
    Prompt content for `kiln-planner-claude` must include:
    Full contents of `MEMORY_DIR/vision.md`.
    Full contents of `MEMORY_DIR/MEMORY.md`.
    Instruction text:
    "Create a detailed, phased implementation plan. Output it as markdown with sections: Overview, Phases (each with a name, goal, tasks, and acceptance criteria), Risks, and Open Questions. This is the Claude perspective plan."
    Include `PROJECT_PATH` and `MEMORY_DIR`.
-   Second task name:
-   `kiln-planner-codex`
-   Task description:
-   `"Kiln Codex Planner"`
+   Second task:
+   `name`: `"Sun Tzu"` (the alias)
+   `subagent_type`: `kiln-planner-codex`
+   `description`: `"GPT-side planner"`
    Prompt content for `kiln-planner-codex` must include:
    The same full vision and memory contents.
    Instruction text:
@@ -172,8 +172,9 @@ Execute the Kiln protocol autonomously from the current working directory using 
 
 9. Run conditional debate.
    If `DEBATE_MODE >= 2`, spawn `kiln-debater` using the Task tool.
-   Task description:
-   `"Kiln Plan Debater"`
+   `name`: `"Socrates"` (the alias)
+   `subagent_type`: `kiln-debater`
+   `description`: `"Plan debate"`
    Prompt must include:
    Full `PLAN_CLAUDE`.
    Full `PLAN_CODEX`.
@@ -190,8 +191,9 @@ Execute the Kiln protocol autonomously from the current working directory using 
 
 10. Synthesize the master plan.
     Spawn `kiln-synthesizer` with the Task tool.
-    Task description:
-    `"Kiln Plan Synthesizer"`
+    `name`: `"Plato"` (the alias)
+    `subagent_type`: `kiln-synthesizer`
+    `description`: `"Plan synthesis"`
     Prompt must include:
     Full `PLAN_CLAUDE`.
     Full `PLAN_CODEX`.
@@ -242,8 +244,9 @@ Execute the Kiln protocol autonomously from the current working directory using 
     Keep original order.
     For each phase:
     Spawn `kiln-phase-executor` via the Task tool.
-    Task description format:
-    `"Kiln Phase Executor — <phase name>"`
+    `name`: `"Maestro"` (the alias)
+    `subagent_type`: `kiln-phase-executor`
+    `description`: `"Phase <N> — <phase name>"`
     Task prompt must include:
     Full phase section from the master plan, including name, goal, tasks, and acceptance criteria.
     Full `MEMORY_DIR/MEMORY.md`.
@@ -267,8 +270,9 @@ Execute the Kiln protocol autonomously from the current working directory using 
 
 14. Run final validation.
     After all phases complete, spawn `kiln-validator` via the Task tool.
-    Task description:
-    `"Kiln Final Validator"`
+    `name`: `"Argus"` (the alias)
+    `subagent_type`: `kiln-validator`
+    `description`: `"E2E validation"`
     Prompt must include:
     Full `MEMORY_DIR/master-plan.md`.
     All `MEMORY_DIR/phase-*-results.md` files in full.
@@ -304,7 +308,7 @@ Execute the Kiln protocol autonomously from the current working directory using 
 1. **All paths are dynamic.** Never hardcode paths. Derive every path from `PROJECT_PATH`, `HOME`, and `ENCODED_PATH` from Step 3. The command must work in any project directory.
 2. **Memory is the source of truth.** Before every stage transition, re-read `MEMORY_DIR/MEMORY.md` to confirm current state. If status already equals `"planning complete"` when entering Stage 2, skip to Step 11 using existing `master-plan.md`. If status equals `"executing — phase N complete"`, resume from phase `N+1`.
 3. **Never skip stages.** Execute Stage 1 before Stage 2 and Stage 2 before Stage 3. The only exception is resumption as described in Rule 2. Use `/kiln:resume` for resumption; do not implement separate resume logic outside these state checks.
-4. **Use the Task tool for all sub-agents.** Never invoke `kiln-planner-claude`, `kiln-planner-codex`, `kiln-debater`, `kiln-synthesizer`, `kiln-phase-executor`, or `kiln-validator` as slash commands. Spawn each exclusively with the Task tool and complete, self-contained prompts.
+4. **Use the Task tool for all sub-agents.** Never invoke `kiln-planner-claude`, `kiln-planner-codex`, `kiln-debater`, `kiln-synthesizer`, `kiln-phase-executor`, or `kiln-validator` as slash commands. Spawn each exclusively with the Task tool and complete, self-contained prompts. Always set `name` to the agent's character alias (e.g., `"Confucius"`, `"Maestro"`) and `subagent_type` to the internal name (e.g., `kiln-planner-claude`). This ensures the Claude Code UI shows aliases in the spawn box.
 5. **Parallel where safe, sequential where required.** Run Step 8 planners in parallel. Run all other Task spawns sequentially, waiting for each to finish before starting the next.
 6. **Write working outputs only.** Phase executors must create real files with real content and working code. Placeholders, TODO stubs, and non-functional scaffolds are failures that must be reported before continuing.
 7. **Checkpoint memory after every significant action.** Update `MEMORY_DIR/MEMORY.md` status after Step 2, after Step 4, after Step 5, at every brainstorm checkpoint, after Step 7, after Step 10, after Step 12, after each phase in Step 13, after Step 14, and after Step 15.

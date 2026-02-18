@@ -52,7 +52,7 @@ The Kiln pipeline uses these specialized agents. Each has a character alias used
 | **Argus** | kiln-validator | E2E validation and test runner |
 | **Sherlock** | kiln-researcher | Fast documentation and codebase research |
 
-When logging agent activity, use the alias (e.g., `[Confucius]` not `[kiln-planner-claude]`). The internal name is used only for spawning via the Task tool.
+When logging agent activity, use the alias (e.g., `[Confucius]` not `[kiln-planner-claude]`). When spawning agents via the Task tool, always set `name` to the alias and `subagent_type` to the internal name. This ensures the Claude Code UI displays character names in the spawn box (e.g., `Confucius (Claude-side planner)` instead of `kiln-planner-claude`).
 
 ## Codex CLI Reference
 

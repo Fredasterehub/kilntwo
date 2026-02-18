@@ -59,9 +59,9 @@ Execute the lifecycle in this exact order. Do not skip steps. At each milestone,
 7. Immediately append setup event entries, including branch creation/checkout and directory creation, to the same state file.
 
 ## Step 2: Plan
-1. Spawn planning sub-agents in parallel using two separate Task tool calls:
-   - Call `kiln-planner-claude` with `phase_description`, `project_path`, `memory_dir`.
-   - Call `kiln-planner-codex` with `phase_description`, `project_path`, `memory_dir`.
+1. Spawn planning sub-agents in parallel using two separate Task tool calls (use alias as `name`, internal name as `subagent_type`):
+   - Spawn `name: "Confucius"`, `subagent_type: kiln-planner-claude` with `phase_description`, `project_path`, `memory_dir`.
+   - Spawn `name: "Sun Tzu"`, `subagent_type: kiln-planner-codex` with `phase_description`, `project_path`, `memory_dir`.
 2. Wait for both Task calls to finish before any file checks or downstream actions.
 3. Verify planner outputs exist:
    - `<project_path>/.kiln/plans/claude_plan.md`
@@ -71,14 +71,14 @@ Execute the lifecycle in this exact order. Do not skip steps. At each milestone,
    - Set state status to `error`.
    - Halt with a clear failure message.
 5. If `debate_mode >= 2`, run debate before synthesis:
-   - Spawn `kiln-debater` via Task.
+   - Spawn `name: "Socrates"`, `subagent_type: kiln-debater` via Task.
    - Pass `project_path`, `claude_plan_path`, `codex_plan_path`, and `debate_mode`.
    - Use absolute paths:
      - `claude_plan_path = <project_path>/.kiln/plans/claude_plan.md`
      - `codex_plan_path = <project_path>/.kiln/plans/codex_plan.md`
    - Wait for completion.
    - Record debate completion in phase state.
-6. Spawn `kiln-synthesizer` via Task after planner/debater completion:
+6. Spawn `name: "Plato"`, `subagent_type: kiln-synthesizer` via Task after planner/debater completion:
    - Pass `project_path`.
    - Pass `plan_type` exactly as `"phase"`.
    - If debate output exists, pass debate resolution path:
@@ -93,7 +93,7 @@ Execute the lifecycle in this exact order. Do not skip steps. At each milestone,
 9. Append a planning-complete event to phase state once `phase_plan.md` is validated.
 
 ## Step 3: Prompt
-1. Spawn `kiln-prompter` via Task:
+1. Spawn `name: "Scheherazade"`, `subagent_type: kiln-prompter` via Task:
    - Pass `project_path`.
    - Pass synthesized plan path: `<project_path>/.kiln/plans/phase_plan.md`.
 2. Wait for prompter completion.
@@ -113,7 +113,7 @@ Execute the lifecycle in this exact order. Do not skip steps. At each milestone,
    - `tasks_succeeded = 0`
    - `tasks_failed = 0`
 2. For each prompt file in lexicographic order, execute sequentially:
-   - Spawn `kiln-implementer` via Task.
+   - Spawn `name: "Codex"`, `subagent_type: kiln-implementer` via Task.
    - Pass `project_path`.
    - Pass the full absolute prompt path (for example `<project_path>/.kiln/prompts/task_01.md`).
    - Wait for completion.
@@ -151,7 +151,7 @@ Execute the lifecycle in this exact order. Do not skip steps. At each milestone,
     - Proceed to Step 5.
 
 ## Step 5: Review
-1. Spawn `kiln-reviewer` via Task with:
+1. Spawn `name: "Sphinx"`, `subagent_type: kiln-reviewer` via Task with:
    - `project_path`
    - `phase_number`
    - `git_branch_name`
@@ -170,11 +170,11 @@ Execute the lifecycle in this exact order. Do not skip steps. At each milestone,
        - `<project_path>/.kiln/prompts/fix_round_<R>.md`
        - Include explicit instructions derived from recommendations.
        - Frame the content as implementation tasks for `kiln-implementer`.
-     - Spawn `kiln-implementer` with:
+     - Spawn `name: "Codex"`, `subagent_type: kiln-implementer` with:
        - `project_path`
        - fix prompt absolute path
      - Wait for implementation completion.
-     - Spawn `kiln-reviewer` again with the same review inputs.
+     - Spawn `name: "Sphinx"`, `subagent_type: kiln-reviewer` again with the same review inputs.
      - Wait and read updated `<project_path>/.kiln/reviews/phase_<N>_review.md`.
      - If status becomes `approved`, append approval event for round `R` and proceed to Step 6.
      - If still rejected and `R < 3`, increment `R` and repeat.
